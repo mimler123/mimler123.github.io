@@ -1,2 +1,0 @@
-(this["webpackJsonpmimler123.github.io"]=this["webpackJsonpmimler123.github.io"]||[]).push([[0],{9:function(e,i,t){"use strict";t.r(i);t(1);var n=t(3),r=t.n(n),c=t(0);function s(){return Object(c.jsx)("div",{id:"main",children:Object(c.jsx)("h1",{children:"MAIN"})})}r.a.render(Object(c.jsx)(s,{}),document.getElementById("root"))}},[[9,1,2]]]);
-//# sourceMappingURL=main.545631eb.chunk.js.map
