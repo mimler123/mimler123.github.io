@@ -1,9 +1,16 @@
 #LeftBar {
   background-color: #f5e9d7;
-  max-width: 475px;
+  max-width: 470px;
   height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
-h1 {
-  font-size: 1000px;
-  color: #266a56;
+.header {
+  position: relative;
+  display: flexbox;
+  height: 130px;
+}
+#title {
+  display: inline-block;
+  transform: scale(1, 1);
 }

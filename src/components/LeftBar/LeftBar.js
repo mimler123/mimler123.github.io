@@ -1,11 +1,13 @@
 import React from 'react';
 import "./LeftBar.css";
+import TitleImg from "./TITLE.png";
 
 export default function LeftBar() {
     return (
         <div id="LeftBar">
-            <h1>DEEPWOKEN</h1>
-            <h3>INTERACTIVE MAP</h3>
+            <div className="header">
+               <img id="title" src={TitleImg} alt="DEEPWOKENMAP" />
+            </div>
         </div>
     )
 }
