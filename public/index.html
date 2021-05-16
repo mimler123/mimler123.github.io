@@ -8,9 +8,40 @@
     <meta name="description" content="Interactive Map for Deekwoken" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Deepwoken Interactive Map</title>
+
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-24RZPJXWGM"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-24RZPJXWGM");
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
   </head>
   <body>
     <noscript>Please enable your Javascript use this Website.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <script>
+        var map = new ol.Map({
+          target: "map",
+          layers: [
+            new ol.layer.Tile({
+              source: new ol.source.OSM(),
+            }),
+          ],
+          view: new ol.View({
+            center: ol.proj.fromLonLat([37.41, 8.82]),
+            zoom: 4,
+          }),
+        });
+      </script>
+    </div>
   </body>
 </html>
