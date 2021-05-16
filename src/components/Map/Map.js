@@ -75,7 +75,7 @@ class PublicMap extends Component {
   render() {
     this.updateMap(); // Update map on render?
     return (
-      <div id="map" style={{ width: "100%", height: "100vh", backgroundColor: "#2b2b2b" }}>
+      <div id="map" style={{ width: "78%", height: "100vh", backgroundColor: "#2b2b2b" }}>
         
       </div>
     );
