@@ -1,8 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
+import firebase from '../../services/firebase';
 import "./LeftBar.css";
 import SearchImg from "./SearchImg.png";
 
+
 export default function LeftBar() {
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if(user) {
+            setLoggedIn(true);
+        }else {
+            setLoggedIn(false);
+        }
+    })
+
+    var signIn = () => {
+        if(loggedIn) {
+            return (
+                <div className="l">
+                    <button onClick={logout}>LOGOUT</button>
+                    <p>DEBUG: Logged in as {firebase.auth().currentUser.displayName}</p>
+                </div>
+            );
+        } else {
+            return (
+                <button onClick={login}>LOGIN WITH GOOGLE</button>
+            );
+        }
+    }
+    var login = () => {
+        firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((res) => {
+            var user = res.user;
+            var token = res.accessToken;
+            console.log("Logged in with email " + user.email);
+            //setLoggedIn(true);
+        }).catch((err) => {
+            var errorCode = err.code;
+            var errorMsg = err.message;
+            var mail = err.email;
+            console.log("Error during login: " + errorMsg);
+        })
+    }
+    var logout = () => {
+        firebase.auth().signOut().then(() => {
+            console.log("Logged out.")
+        }).catch((error) => {
+            console.log("Error during logout: " + error);
+        })
+    }
     return (
         <div id="LeftBar">
             <div className="header">
@@ -68,6 +114,9 @@ export default function LeftBar() {
                         </li>
                     </ul>
                 </div>
+
+                {signIn()}                
+
                 <div className="footer">
                     <p className="version">V - 1.0 / 16.05.21</p>
                     <div className="creditsBox">

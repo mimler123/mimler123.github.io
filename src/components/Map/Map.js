@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Ol from "ol";
 import OlMap from "ol/Map";
 import OlView from "ol/View";
 import Projection from 'ol/proj/Projection';
@@ -8,6 +9,11 @@ import OlLayerTile from "ol/layer/Tile";
 import OlSourceOSM from "ol/source/OSM";
 import Control from "ol/control/Control";
 import ControlAtt from "ol/control/Attribution"
+import OlVector from "ol/layer/Vector";
+import OlVectorSource from "ol/source/Vector";
+import OlPoint from "ol/geom/Point";
+import OlFeature from "ol/Feature";
+import OlCircle from "ol/geom/Circle";
 
 class PublicMap extends Component {
   constructor(props) {
@@ -21,6 +27,8 @@ class PublicMap extends Component {
         units: 'pixels',
         extent: this.extend,
       });
+
+
 
     this.olmap = new OlMap({
       target: null,
@@ -41,8 +49,38 @@ class PublicMap extends Component {
       }),
       controls: [
           
-      ]
+      ],
     });
+
+    this.markerLayer = new OlVector({
+      source: new OlVectorSource({
+        features: [
+          new OlFeature({
+            id: "Water",
+            geometry: new OlCircle([500, 450], 20)
+            
+          }),
+          new OlFeature({
+            id: "OtherWater",
+            geometry: new OlCircle([500, 480], 20)
+          })
+        ]
+      })
+    })
+
+
+    this.olmap.addLayer(this.markerLayer);
+    
+    this.olmap.on("click", (evt) => {
+      var feature = this.olmap.forEachFeatureAtPixel(evt.pixel, (feature) => {
+        return feature;
+      })
+      if(feature != undefined) {
+        console.log(feature.values_.id);
+      }else {
+        console.log(undefined);
+      }
+    })
   }
 
   updateMap() {
@@ -75,7 +113,7 @@ class PublicMap extends Component {
   render() {
     this.updateMap(); // Update map on render?
     return (
-      <div id="map" style={{ width: "78%", height: "100vh", backgroundColor: "#2b2b2b" }}>
+      <div id="map" style={{ width: "78vw", height: "100vh", backgroundColor: "#2b2b2b", position: "absolute", right: "0px", zIndex: "0" }}>
         
       </div>
     );

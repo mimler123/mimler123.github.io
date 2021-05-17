@@ -4,6 +4,7 @@
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
+  z-index: 1;
 }
 .header {
   position: relative;
@@ -40,7 +41,7 @@ hr {
   margin: 0 auto;
   text-align: center;
 }
-.Visibillity button {
+#LeftBar button {
   display: flexbox;
   justify-content: center;
   align-items: center;
@@ -52,7 +53,7 @@ hr {
   background-color: #f5e9d7;
   padding-right: 20px;
 }
-.Visibillity button:hover {
+#LeftBar button:hover {
   background-color: #e2d8ca;
 }
 .s {
@@ -129,4 +130,15 @@ li {
   color: #266a56;
   font-size: 22px;
   font-weight: 600;
+}
+.firebaseui-id-idp-button {
+  height: 50px;
+  border: 0;
+  font-size: 22px;
+  text-align: center;
+  height: 100%;
+}
+.firebaseui-id-idp-button img {
+  height: 50px;
+  border: 0;
 }
