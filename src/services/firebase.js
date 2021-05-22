@@ -1,4 +1,5 @@
-import firebase from "firebase";
+import firebaseApp from "firebase/app";
+import firebaseAuth from "firebase/auth";
 
 var config = {
   apiKey: "AIzaSyBHroR7QPodDaLtaCJhLi9jijA7A0WWl64",
@@ -10,6 +11,8 @@ var config = {
   measurementId: "G-ELMHDJG3L3",
 };
 
-firebase.initializeApp(config);
+var firebase = firebaseApp.initializeApp(config);
+
+//export { firebaseAuth };
 
 export default firebase;

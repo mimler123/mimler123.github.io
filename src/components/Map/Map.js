@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import Ol from "ol";
+//import Ol from "ol";
 import OlMap from "ol/Map";
 import OlView from "ol/View";
-import Projection from 'ol/proj/Projection';
-import Static from 'ol/source/ImageStatic';
-import ImageLayer from 'ol/layer/Image';
-import OlLayerTile from "ol/layer/Tile";
-import OlSourceOSM from "ol/source/OSM";
-import Control from "ol/control/Control";
-import ControlAtt from "ol/control/Attribution"
+import Projection from "ol/proj/Projection";
+import Static from "ol/source/ImageStatic";
+import ImageLayer from "ol/layer/Image";
+//import OlLayerTile from "ol/layer/Tile";
+//import OlSourceOSM from "ol/source/OSM";
+//import Control from "ol/control/Control";
+//import ControlAtt from "ol/control/Attribution"
 import OlVector from "ol/layer/Vector";
 import OlVectorSource from "ol/source/Vector";
-import OlPoint from "ol/geom/Point";
+//import OlPoint from "ol/geom/Point";
 import OlFeature from "ol/Feature";
 import OlCircle from "ol/geom/Circle";
 
@@ -23,33 +23,29 @@ class PublicMap extends Component {
 
     this.extend = [0, 0, 1024, 968];
     this.projection = new Projection({
-        code: 'xkcd-image',
-        units: 'pixels',
-        extent: this.extend,
-      });
-
-
+      code: "xkcd-image",
+      units: "pixels",
+      extent: this.extend,
+    });
 
     this.olmap = new OlMap({
       target: null,
       layers: [
         new ImageLayer({
-            source: new Static({
-                attributions: '',
-                url: 'https://mimler123.github.io/OCEAN.png',
-                projection: this.projection,
-                imageExtent: this.extend,
-            })
-        })
+          source: new Static({
+            attributions: "",
+            url: "https://mimler123.github.io/OCEAN.png",
+            projection: this.projection,
+            imageExtent: this.extend,
+          }),
+        }),
       ],
       view: new OlView({
-          projection: this.projection,
+        projection: this.projection,
         center: this.state.center,
-        zoom: this.state.zoom
+        zoom: this.state.zoom,
       }),
-      controls: [
-          
-      ],
+      controls: [],
     });
 
     this.markerLayer = new OlVector({
@@ -57,30 +53,28 @@ class PublicMap extends Component {
         features: [
           new OlFeature({
             id: "Water",
-            geometry: new OlCircle([500, 450], 20)
-            
+            geometry: new OlCircle([500, 450], 20),
           }),
           new OlFeature({
             id: "OtherWater",
-            geometry: new OlCircle([500, 480], 20)
-          })
-        ]
-      })
-    })
-
+            geometry: new OlCircle([500, 480], 20),
+          }),
+        ],
+      }),
+    });
 
     this.olmap.addLayer(this.markerLayer);
-    
+
     this.olmap.on("click", (evt) => {
       var feature = this.olmap.forEachFeatureAtPixel(evt.pixel, (feature) => {
         return feature;
-      })
-      if(feature != undefined) {
+      });
+      if (feature !== undefined) {
         console.log(feature.values_.id);
-      }else {
+      } else {
         console.log(undefined);
       }
-    })
+    });
   }
 
   updateMap() {
@@ -113,9 +107,17 @@ class PublicMap extends Component {
   render() {
     this.updateMap(); // Update map on render?
     return (
-      <div id="map" style={{ width: "78vw", height: "100vh", backgroundColor: "#2b2b2b", position: "absolute", right: "0px", zIndex: "0" }}>
-        
-      </div>
+      <div
+        id="map"
+        style={{
+          width: "78vw",
+          height: "100vh",
+          backgroundColor: "#2b2b2b",
+          position: "absolute",
+          right: "0px",
+          zIndex: "0",
+        }}
+      ></div>
     );
   }
 }
