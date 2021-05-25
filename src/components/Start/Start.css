@@ -1,0 +1,28 @@
+.Start {
+  width: 100vw;
+  height: 100vh;
+  background-color: #266a56;
+  text-align: center;
+}
+.Start h1 {
+  color: #337763;
+  font-size: 170px;
+}
+.Start h3 {
+  color: #337763;
+  font-size: 80px;
+  margin-top: -80px;
+  margin-left: -8%;
+}
+.StartBox {
+  padding: 30px;
+  margin-top: 24vh;
+  position: relative;
+}
+.StartBox p {
+  color: white;
+  font-size: 22px;
+}
+.StartBox img {
+  margin-top: -50px;
+}

@@ -2,26 +2,52 @@ import React, { useState } from "react";
 import firebase, { provider } from "../../services/firebase";
 import "./LeftBar.css";
 import SearchImg from "./SearchImg.png";
+import Locations from "../../services/locations";
+import Quests from "../../services/quests";
+import Items from "../../services/items";
+import Fetched from "../../services/fetched";
 
 export default function LeftBar() {
-  const markers = firebase.firestore().collection("Markers");
-  //var provider = new firebase.auth.GoogleAuthProvider();
-
   const [loggedIn, setLoggedIn] = useState(false);
-  const [locations, setLocations] = useState([]);
-  const [items, setItems] = useState([]);
-  const [quests, setQuests] = useState([]);
+
+  const { locations, setLocations } = Locations();
+  const { quests, setQuests } = Quests();
+  const { items, setItems } = Items();
+  const { fetched, setFetched } = Fetched();
+
+  const [fetchedLocations, setFetchedLocations] = useState(false);
+  const [fetchedItems, setFetchedItems] = useState(false);
+  const [fetchedQuests, setFetchedQuests] = useState(false);
 
   firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
+    if (user && loggedIn === false) {
       setLoggedIn(true);
-    } else {
+      console.log("Logged in succesful!");
+    } else if (!user && loggedIn === true) {
       setLoggedIn(false);
+      setFetchedItems(false);
+      setFetchedLocations(false);
+      setFetchedQuests(false);
+      setLocations([
+        {
+          name: "Please login to see.",
+        },
+      ]);
+      setItems([
+        {
+          name: "Please login to see.",
+        },
+      ]);
+      setQuests([
+        {
+          name: "Please login to see.",
+        },
+      ]);
     }
   });
 
   var getLocations = () => {
-    if (!loggedIn) {
+    if (!loggedIn || fetchedLocations) {
       return;
     }
     firebase
@@ -31,11 +57,13 @@ export default function LeftBar() {
       .get()
       .then((snapshot) => {
         setLocations(snapshot.docs.map((doc) => doc.data()));
+        setFetchedLocations(true);
+        setFetched(true);
         return;
       });
   };
   var getItems = () => {
-    if (!loggedIn) {
+    if (!loggedIn || fetchedItems) {
       return;
     }
     firebase
@@ -45,11 +73,12 @@ export default function LeftBar() {
       .get()
       .then((snapshot) => {
         setItems(snapshot.docs.map((doc) => doc.data()));
+        setFetchedItems(true);
         return;
       });
   };
   var getQuests = () => {
-    if (!loggedIn) {
+    if (!loggedIn || fetchedQuests) {
       return;
     }
     firebase
@@ -59,9 +88,16 @@ export default function LeftBar() {
       .get()
       .then((snapshot) => {
         setQuests(snapshot.docs.map((doc) => doc.data()));
+        setFetchedQuests(true);
         return;
       });
   };
+
+  if (fetchedLocations && fetchedItems && fetchedQuests && !fetched) {
+    //setFetched(true);
+  } else if (!fetchedLocations && !fetchedItems && !fetchedQuests && fetched) {
+    setFetched(false);
+  }
 
   var signIn = () => {
     if (loggedIn && firebase.auth().currentUser) {
@@ -129,21 +165,21 @@ export default function LeftBar() {
           <p className="group">LOCATIONS</p>
           {getLocations()}
           {locations.map((loc) => (
-            <li>{loc.name}</li>
+            <li key={loc.name}>{loc.name}</li>
           ))}
         </div>
         <div className="Filter" id="Items">
           <p className="group">ITEMS</p>
           {getItems()}
           {items.map((item) => (
-            <li>{item.name}</li>
+            <li key={item.name}>{item.name}</li>
           ))}
         </div>
         <div className="Filter" id="Quests">
           <p className="group">QUESTS</p>
           {getQuests()}
           {quests.map((quest) => (
-            <li>{quest.name}</li>
+            <li key={quest.name}>{quest.name}</li>
           ))}
         </div>
       </div>

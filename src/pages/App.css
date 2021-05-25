@@ -8,6 +8,7 @@
 html,
 body {
   font-family: "Cinzel", serif;
+  overflow-y: hidden;
 }
 #main {
   display: flex;

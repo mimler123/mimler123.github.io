@@ -1,6 +1,6 @@
 #LeftBar {
   background-color: #f5e9d7;
-  max-width: 440px;
+  max-width: 350px;
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -17,12 +17,12 @@
   transform: scale(1, 1);
 }
 h1 {
-  font-size: 66px;
+  font-size: 53px;
   color: #266a56;
   font-weight: 400;
 }
 h3 {
-  font-size: 28px;
+  font-size: 27px;
   color: #266a56;
   margin: -26px 20px;
   font-weight: 600;
@@ -36,22 +36,27 @@ hr {
   height: 3px;
 }
 .Visibillity {
-  padding: 10px;
-  width: 80%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
   margin: 0 auto;
   text-align: center;
+}
+.Visibillity button {
+  max-width: 155px;
 }
 #LeftBar button {
   display: flexbox;
   justify-content: center;
   align-items: center;
-  font-size: 30px;
+  font-size: 28px;
   font-family: "Cinzel", serif;
   color: #266a56;
   border: 0;
   text-align: center;
   background-color: #f5e9d7;
-  padding-right: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
 }
 #LeftBar button:hover {
   background-color: #e2d8ca;
@@ -105,22 +110,23 @@ hr {
 .footer {
   position: absolute;
   bottom: 0px;
-  width: 400px;
+  width: 336px;
   display: flex;
   justify-content: space-between;
   color: #266a56;
 }
 .version {
   position: absolute;
-  font-size: 18px;
+  font-size: 16px;
   bottom: 0px;
 }
 .creditsBox {
   text-align: center;
   margin-left: 50%;
+  font-size: 14px;
 }
 .creditsTitle {
-  font-size: 20px;
+  font-size: 16px;
 }
 ul {
   list-style: none;
@@ -130,15 +136,4 @@ li {
   color: #266a56;
   font-size: 22px;
   font-weight: 600;
-}
-.firebaseui-id-idp-button {
-  height: 50px;
-  border: 0;
-  font-size: 22px;
-  text-align: center;
-  height: 100%;
-}
-.firebaseui-id-idp-button img {
-  height: 50px;
-  border: 0;
 }

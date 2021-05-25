@@ -1,72 +1,109 @@
-import React, { Component } from "react";
-//import Ol from "ol";
+import React, { Component, useState, useRef, useEffect } from "react";
 import OlMap from "ol/Map";
 import OlView from "ol/View";
 import Projection from "ol/proj/Projection";
 import Static from "ol/source/ImageStatic";
 import ImageLayer from "ol/layer/Image";
-//import OlLayerTile from "ol/layer/Tile";
-//import OlSourceOSM from "ol/source/OSM";
-//import Control from "ol/control/Control";
-//import ControlAtt from "ol/control/Attribution"
 import OlVector from "ol/layer/Vector";
 import OlVectorSource from "ol/source/Vector";
-//import OlPoint from "ol/geom/Point";
 import OlFeature from "ol/Feature";
 import OlCircle from "ol/geom/Circle";
+import Locations from "../../services/locations";
+import VectorLayer from "ol/layer/Vector";
+import Firebase from "../../services/firebase";
+import Fetched from "../../services/fetched";
 
-class PublicMap extends Component {
-  constructor(props) {
-    super(props);
+export default function Map(props) {
+  const { locations } = Locations();
+  const { fetched } = Fetched();
 
-    this.state = { center: [530, 480], zoom: 3 };
+  const [map, setMap] = useState();
+  const [featuresLayer, setFeaturesLayer] = useState();
+  const [selectedCoord, setSelectedCoord] = useState();
 
-    this.extend = [0, 0, 1024, 968];
-    this.projection = new Projection({
-      code: "xkcd-image",
-      units: "pixels",
-      extent: this.extend,
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [fetchedFeatures, setFetchedFeatures] = useState(false);
+
+  Firebase.auth().onAuthStateChanged((user) => {
+    if (user && loggedIn === false) {
+      setLoggedIn(true);
+    } else if (!user && loggedIn === true) {
+      setLoggedIn(false);
+    }
+  });
+
+  const mapElement = useRef();
+
+  useEffect(() => {
+    var features = [];
+    var markerLayer;
+    if (loggedIn && !fetchedFeatures && fetched) {
+      features = locations.map(
+        (loc) =>
+          new OlFeature({
+            id: loc.name,
+            geometry: new OlCircle([loc.position[0], loc.position[1]], 10),
+          })
+      );
+      console.log(features);
+      setFetchedFeatures(true);
+      markerLayer = new OlVector({
+        source: new OlVectorSource({
+          features: features,
+        }),
+      });
+
+      console.log(markerLayer);
+    } else if (!loggedIn && fetchedFeatures) {
+      console.log("Made rescan avail");
+      setFetchedFeatures(false);
+      markerLayer = new OlVector();
+      return;
+    } else {
+      console.log("Not found");
+      return;
+    }
+
+    const initialFeaturesLayer = new OlVector({
+      source: new OlVectorSource(),
     });
-
-    this.olmap = new OlMap({
-      target: null,
+    const initialMap = new OlMap({
+      target: mapElement.current,
       layers: [
         new ImageLayer({
           source: new Static({
             attributions: "",
             url: "https://mimler123.github.io/OCEAN.png",
-            projection: this.projection,
-            imageExtent: this.extend,
+            projection: new Projection({
+              code: "xkcd-image",
+              units: "pixels",
+              extent: [0, 0, 1024, 968],
+            }),
+            imageExtent: [0, 0, 1024, 968],
           }),
         }),
       ],
       view: new OlView({
-        projection: this.projection,
-        center: this.state.center,
-        zoom: this.state.zoom,
+        projection: new Projection({
+          code: "xkcd-image",
+          units: "pixels",
+          extent: [0, 0, 1024, 968],
+        }),
+        center: [500, 400],
+        zoom: 3,
       }),
       controls: [],
     });
+    initialMap.addLayer(markerLayer);
 
-    this.markerLayer = new OlVector({
-      source: new OlVectorSource({
-        features: [
-          new OlFeature({
-            id: "Water",
-            geometry: new OlCircle([500, 450], 20),
-          }),
-          new OlFeature({
-            id: "OtherWater",
-            geometry: new OlCircle([500, 480], 20),
-          }),
-        ],
-      }),
-    });
+    setMap(initialMap);
+    setFeaturesLayer(initialFeaturesLayer);
+  }, [locations]);
 
-    this.olmap.addLayer(this.markerLayer);
-
-    this.olmap.on("click", (evt) => {
-      var feature = this.olmap.forEachFeatureAtPixel(evt.pixel, (feature) => {
+  if (map !== undefined) {
+    map.on("click", (evt) => {
+      console.log(evt.pixel);
+      var feature = map.forEachFeatureAtPixel(evt.pixel, (feature) => {
         return feature;
       });
       if (feature !== undefined) {
@@ -77,49 +114,19 @@ class PublicMap extends Component {
     });
   }
 
-  updateMap() {
-    this.olmap.getView().setCenter(this.state.center);
-    this.olmap.getView().setZoom(this.state.zoom);
-  }
-
-  componentDidMount() {
-    this.olmap.setTarget("map");
-
-    // Listen to map changes
-    this.olmap.on("moveend", () => {
-      let center = this.olmap.getView().getCenter();
-      let zoom = this.olmap.getView().getZoom();
-      this.setState({ center, zoom });
-    });
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    let center = this.olmap.getView().getCenter();
-    let zoom = this.olmap.getView().getZoom();
-    if (center === nextState.center && zoom === nextState.zoom) return false;
-    return true;
-  }
-
-  userAction() {
-    this.setState({ center: [546000, 6868000], zoom: 5 });
-  }
-
-  render() {
-    this.updateMap(); // Update map on render?
-    return (
-      <div
-        id="map"
-        style={{
-          width: "78vw",
-          height: "100vh",
-          backgroundColor: "#2b2b2b",
-          position: "absolute",
-          right: "0px",
-          zIndex: "0",
-        }}
-      ></div>
-    );
-  }
+  return (
+    <div
+      id="map"
+      ref={mapElement}
+      className="map-container"
+      style={{
+        width: "90vw",
+        height: "100vh",
+        backgroundColor: "#2b2b2b",
+        position: "absolute",
+        right: "0px",
+        zIndex: "0",
+      }}
+    ></div>
+  );
 }
-
-export default PublicMap;
