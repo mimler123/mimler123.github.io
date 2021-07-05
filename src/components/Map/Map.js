@@ -8,10 +8,15 @@ import OlVector from "ol/layer/Vector";
 import OlVectorSource from "ol/source/Vector";
 import OlFeature from "ol/Feature";
 import OlCircle from "ol/geom/Circle";
+import OlPoint from "ol/geom/Point";
 import Locations from "../../services/locations";
 import VectorLayer from "ol/layer/Vector";
 import Firebase from "../../services/firebase";
 import Fetched from "../../services/fetched";
+import OlIcon from "ol/style/Icon";
+import OlStyle from "ol/style/Style";
+import OlStyleCircle from "ol/style/Circle";
+import OlFill from "ol/style/Fill";
 
 export default function Map(props) {
   const { locations } = Locations();
@@ -35,6 +40,12 @@ export default function Map(props) {
   const mapElement = useRef();
 
   useEffect(() => {
+    var Style = new OlStyle({
+      image: new OlStyleCircle({
+        radius: 10,
+        fill: new OlFill({ color: "black" }),
+      }),
+    });
     var features = [];
     var markerLayer;
     if (loggedIn && !fetchedFeatures && fetched) {
@@ -42,7 +53,8 @@ export default function Map(props) {
         (loc) =>
           new OlFeature({
             id: loc.name,
-            geometry: new OlCircle([loc.position[0], loc.position[1]], 10),
+            name: loc.name,
+            geometry: new OlPoint([loc.position[0], loc.position[1]]),
           })
       );
       console.log(features);
@@ -108,8 +120,11 @@ export default function Map(props) {
       });
       if (feature !== undefined) {
         console.log(feature.values_.id);
+        var tt = document.createElement("p");
+        const ttt = document.createTextNode(feature.values_.id);
+        tt.appendChild(ttt);
       } else {
-        console.log(undefined);
+        return;
       }
     });
   }
