@@ -1,10 +1,12 @@
 import React from "react";
 import "./JoinGuild.css";
 import JoinGuildd from "../../services/joinguild";
+import CurrentGuild from "../../services/currentguild";
 import Firebase from "../../services/firebase";
 
 export default function JoinGuild() {
   const { joinguild, setJoinguild } = JoinGuildd();
+  const { currentguild, setCurrentguild } = CurrentGuild();
 
   const cancel = () => {
     setJoinguild(false);
@@ -18,9 +20,22 @@ export default function JoinGuild() {
       .get()
       .then((snapshot) => {
         if (!snapshot.empty) {
-          console.log(snapshot.docs[0].data());
+          var g = snapshot.docs[0].data();
+          g.users.push(Firebase.auth().currentUser.email);
+          Firebase.firestore()
+            .collection("Guilds")
+            .doc(id)
+            .update({ users: g.users });
+          setCurrentguild({
+            name: g.name,
+            creator: g.creator,
+            creation: g.creation,
+            id: g.id,
+            users: g.users,
+          });
+          setJoinguild(false);
         } else {
-          console.log("Nothing found.");
+          alert("No guild found.");
         }
       });
   };
@@ -28,7 +43,9 @@ export default function JoinGuild() {
   return (
     <div className="JoinGuild">
       <h3>JOIN GUILD</h3>
-      <input id="gid" placeholder="Guild ID" />
+      <span className="vert">
+        <input id="gid" placeholder="Guild ID" />
+      </span>
       <button onClick={join}>Join!</button>
       <button onClick={cancel}>Cancel</button>
     </div>

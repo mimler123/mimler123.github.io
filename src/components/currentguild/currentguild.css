@@ -1,0 +1,22 @@
+.currentGuild {
+  position: absolute;
+  right: 0px;
+  background-color: #f5e9d7;
+  top: 190px;
+  width: 250px;
+  overflow: hidden;
+}
+.currentGuild h3 {
+  padding: 5px 10px;
+  margin: 0;
+}
+.currentGuild p {
+  font-size: 17px;
+  font-weight: 600;
+}
+.currentGuild .guildName {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: left;
+  padding: 5px 10px;
+}

@@ -46,7 +46,12 @@
   font-size: 26px;
   background-color: #f5e9d7;
   border-radius: 0px;
+  margin-bottom: 3px;
 }
 .RightBar button:hover {
   background-color: #e0d1bb;
+}
+.RightBar .LeaveGuild {
+  margin-top: 3px;
+  height: 80px;
 }

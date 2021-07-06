@@ -1,0 +1,9 @@
+#map {
+  position: absolute;
+  background-color: bisque;
+  height: 100vh;
+  width: 1000px;
+  left: 500px;
+  overflow: hidden;
+  z-index: 1;
+}

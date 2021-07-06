@@ -1,30 +1,34 @@
 .JoinGuild {
-    position: absolute;
-    background-color: #f5e9d7;
-    left: 25%;
-    top: 25%;
-    height: 230px;
+  position: absolute;
+  background-color: #f5e9d7;
+  right: 0px;
+  top: 190px;
+  height: 230px;
+  width: 250px;
+  overflow: hidden;
 }
 .JoinGuild h3 {
-    margin: 0;
-    padding: 30px;
+  margin: 0;
+  padding: 30px;
+}
+.vert {
 }
 .JoinGuild input {
-    border: 0;
-    font-size: 22px;
-    padding: 5px;
-    margin-bottom: 20px;
+  border: 0;
+  font-size: 22px;
+  padding: 5px;
+  margin-bottom: 20px;
 }
 .JoinGuild button {
-    display: block;
-    margin: 0 auto;
-    width: 100%;
-    padding: 5px;
-    margin-bottom: 5px;
-    border: 0;
-    font-size: 20px;
-    background-color: #dac3a0;
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 5px;
+  border: 0;
+  font-size: 20px;
+  background-color: #dac3a0;
 }
 .JoinGuild button:hover {
-    background-color: #ccb89b;
+  background-color: #ccb89b;
 }

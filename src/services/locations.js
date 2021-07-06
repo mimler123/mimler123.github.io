@@ -6,6 +6,7 @@ const useLocation = () => {
     {
       name: "Please login to see.",
       position: [0, 0],
+      visible: true,
     },
   ]);
 

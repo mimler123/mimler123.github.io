@@ -1,7 +1,10 @@
 .CreateGuild {
   position: absolute;
-  left: 25%;
-  top: 25%;
+  right: 0px;
+  top: 190px;
+  height: 230px;
+  width: 250px;
+  overflow: hidden;
   background-color: #f5e9d7;
 }
 .CreateGuild h3 {

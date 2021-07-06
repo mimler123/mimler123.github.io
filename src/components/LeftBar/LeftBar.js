@@ -6,18 +6,26 @@ import Locations from "../../services/locations";
 import Quests from "../../services/quests";
 import Items from "../../services/items";
 import Fetched from "../../services/fetched";
+import CurrentGuild from "../../services/currentguild";
+import Rerender from "../../services/rerender";
+import { toStringHDMS } from "ol/coordinate";
+//import
 
 export default function LeftBar() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [renderVar, setRenderVar] = useState(0);
 
   const { locations, setLocations } = Locations();
   const { quests, setQuests } = Quests();
   const { items, setItems } = Items();
   const { fetched, setFetched } = Fetched();
+  const { currentguild, setCurrentguild } = CurrentGuild();
+  const { rerender, setRerender } = Rerender();
 
   const [fetchedLocations, setFetchedLocations] = useState(false);
   const [fetchedItems, setFetchedItems] = useState(false);
   const [fetchedQuests, setFetchedQuests] = useState(false);
+  const [fetchedGuild, setFetchedGuild] = useState(false);
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user && loggedIn === false) {
@@ -92,6 +100,33 @@ export default function LeftBar() {
         return;
       });
   };
+  var getGuild = () => {
+    if (!loggedIn || fetchedGuild) {
+      return;
+    }
+    firebase
+      .firestore()
+      .collection("Guilds")
+      .where("users", "array-contains", firebase.auth().currentUser.email)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.empty) {
+          console.log("Not in Guild.");
+        } else if (snapshot.docs.length > 1) {
+          console.log("In more than one Guild!");
+        } else {
+          var d = snapshot.docs[0].data();
+          setCurrentguild({
+            name: d.name,
+            creator: d.creator,
+            creation: d.creation,
+            id: d.id,
+            users: d.users,
+          });
+        }
+        setFetchedGuild(true);
+      });
+  };
 
   if (fetchedLocations && fetchedItems && fetchedQuests && !fetched) {
     //setFetched(true);
@@ -140,6 +175,9 @@ export default function LeftBar() {
         console.log("Error during logout: " + error);
       });
   };
+
+  getGuild();
+
   return (
     <div id="LeftBar">
       <div className="header">
@@ -162,10 +200,22 @@ export default function LeftBar() {
       </div>
       <div className="Filters" id="Filters">
         <div className="Filter" id="Locations">
-          <p className="group">LOCATIONS</p>
+          <p className="group" key={renderVar}>
+            LOCATIONS
+          </p>
           {getLocations()}
           {locations.map((loc) => (
-            <li key={loc.name}>{loc.name}</li>
+            <button
+              key={loc.name}
+              className={loc.visible ? "LocBtnVisible" : "LocBtnHidden"}
+              onClick={() => {
+                loc.visible = !loc.visible;
+                setRerender(!rerender);
+                setRenderVar(Math.random());
+              }}
+            >
+              {loc.name}
+            </button>
           ))}
         </div>
         <div className="Filter" id="Items">

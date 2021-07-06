@@ -137,3 +137,13 @@ li {
   font-size: 22px;
   font-weight: 600;
 }
+.LocBtnVisible {
+  display: block;
+}
+.LocBtnHidden {
+  display: block;
+  opacity: 50%;
+}
+.Filter button:focus {
+  outline: none;
+}
