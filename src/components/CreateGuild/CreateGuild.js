@@ -5,7 +5,7 @@ import CurrentGuild from "../../services/currentguild";
 import Firebase from "../../services/firebase";
 
 export default function CreateGuild() {
-  const { createguild, setCreateguild } = CreateGuildd();
+  const { setCreateguild } = CreateGuildd();
   const { currentguild, setCurrentguild } = CurrentGuild();
 
   const cancel = () => {

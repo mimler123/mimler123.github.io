@@ -7,8 +7,8 @@ import CurrentGuildd from "../../services/currentguild";
 import Firebase from "../../services/firebase";
 
 export default function RightBar() {
-  const { joinguild, setJoinguild } = JoinGuild();
-  const { createguild, setCreateguild } = CreateGuild();
+  const { setJoinguild } = JoinGuild();
+  const { setCreateguild } = CreateGuild();
   const { currentguild, setCurrentguild } = CurrentGuildd();
   const open = () => {
     setJoinguild(true);
@@ -27,7 +27,7 @@ export default function RightBar() {
   };
   const leaveGuild = () => {
     var u = currentguild.users;
-    if (Firebase.auth().currentUser.email == currentguild.creator) {
+    if (Firebase.auth().currentUser.email === currentguild.creator) {
       Firebase.firestore()
         .collection("Guilds")
         .doc(currentguild.id)

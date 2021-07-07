@@ -5,8 +5,8 @@ import CurrentGuild from "../../services/currentguild";
 import Firebase from "../../services/firebase";
 
 export default function JoinGuild() {
-  const { joinguild, setJoinguild } = JoinGuildd();
-  const { currentguild, setCurrentguild } = CurrentGuild();
+  const { setJoinguild } = JoinGuildd();
+  const { setCurrentguild } = CurrentGuild();
 
   const cancel = () => {
     setJoinguild(false);

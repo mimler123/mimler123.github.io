@@ -27,7 +27,7 @@ export default function Google() {
       <h1>DEEPWOKEN</h1>
       <h3>INTERACTIVE MAP</h3>
       <button onClick={login}>
-        <img src={ctg} />
+        <img src={ctg} alt="LOGIN" />
       </button>
     </div>
   );

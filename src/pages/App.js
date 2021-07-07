@@ -13,9 +13,9 @@ import CreateGuild from "../components/CreateGuild/CreateGuild";
 import Firebase from "../services/firebase";
 
 export default function App() {
-  const { start, setStart } = StartState();
-  const { joinguild, setJoinguild } = JoinGuildState();
-  const { createguild, setCreateguild } = CreateGuildState();
+  const { start } = StartState();
+  const { joinguild } = JoinGuildState();
+  const { createguild } = CreateGuildState();
   const [loggedIn, setLoggedIn] = useState(false);
 
   Firebase.auth().onAuthStateChanged((user) => {

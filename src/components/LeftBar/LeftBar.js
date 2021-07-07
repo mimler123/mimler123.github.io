@@ -8,7 +8,6 @@ import Items from "../../services/items";
 import Fetched from "../../services/fetched";
 import CurrentGuild from "../../services/currentguild";
 import Rerender from "../../services/rerender";
-import { toStringHDMS } from "ol/coordinate";
 //import
 
 export default function LeftBar() {
@@ -19,7 +18,7 @@ export default function LeftBar() {
   const { quests, setQuests } = Quests();
   const { items, setItems } = Items();
   const { fetched, setFetched } = Fetched();
-  const { currentguild, setCurrentguild } = CurrentGuild();
+  const { setCurrentguild } = CurrentGuild();
   const { rerender, setRerender } = Rerender();
 
   const [fetchedLocations, setFetchedLocations] = useState(false);
@@ -187,8 +186,22 @@ export default function LeftBar() {
       <hr />
 
       <div className="Visibillity">
-        <button>SHOW ALL</button>
-        <button>HIDE ALL</button>
+        <button
+          onClick={() => {
+            locations.forEach((e) => (e.visible = true));
+            setRerender(!rerender);
+          }}
+        >
+          SHOW ALL
+        </button>
+        <button
+          onClick={() => {
+            locations.forEach((e) => (e.visible = false));
+            setRerender(!rerender);
+          }}
+        >
+          HIDE ALL
+        </button>
       </div>
 
       <hr />

@@ -3,7 +3,7 @@ import "./currentguild.css";
 import CurrentGuild from "../../services/currentguild";
 
 export default function currentguild() {
-  const { currentguild, setCurrentguild } = CurrentGuild();
+  const { currentguild } = CurrentGuild();
 
   var date = new Date(currentguild.creation);
 
