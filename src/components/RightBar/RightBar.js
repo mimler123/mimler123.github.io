@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import "./RightBar.css";
 import JoinGuild from "../../services/joinguild";
 import CreateGuild from "../../services/createguild";
 import CurrentGuild from "../currentguild/currentguild";
 import CurrentGuildd from "../../services/currentguild";
+import CreateMarker from "../CreateMarker/CreateMarker";
 import Firebase from "../../services/firebase";
 
 export default function RightBar() {
   const { setJoinguild } = JoinGuild();
   const { setCreateguild } = CreateGuild();
   const { currentguild, setCurrentguild } = CurrentGuildd();
+  const [markerCreation, setMarkerCreation] = useState(false);
   const open = () => {
     setJoinguild(true);
     setCreateguild(false);
@@ -20,7 +22,7 @@ export default function RightBar() {
   };
   const checkGuild = () => {
     if (currentguild.name !== "") {
-      return <CurrentGuild />;
+      return markerCreation ? <CreateMarker /> : <CurrentGuild />;
     } else {
       return <></>;
     }
@@ -57,6 +59,9 @@ export default function RightBar() {
         <>
           <button className="LeaveGuild" onClick={leaveGuild}>
             LEAVE GUILD
+          </button>
+          <button className="createMarkerBtn" onClick={() => setMarkerCreation(!markerCreation)}>
+            {markerCreation ? "CANCEL" : "CREATE MARKER"}
           </button>
         </>
       );

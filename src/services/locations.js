@@ -5,7 +5,7 @@ const useLocation = () => {
   const [locations, setLocations] = useState([
     {
       name: "Please login to see.",
-      position: [0, 0],
+      //position: [0, 0],
       visible: true,
       id: 0
     },

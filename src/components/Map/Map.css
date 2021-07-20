@@ -27,3 +27,16 @@
   width: 250px;
   font-size: 18px;
 }
+.mapboxgl-popup button {
+  height: 100%;
+  width: 20px;
+  color: white;
+  font-size: 18px;
+}
+.mapboxgl-popup-content {
+  background-color:rgb(58, 59, 80);
+  color: white;
+}
+.mapboxgl-popup-tip {
+  border-top-color:rgb(58, 59, 80) !important;
+}

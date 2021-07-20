@@ -64,6 +64,37 @@ export default function LeftBar() {
       .get()
       .then((snapshot) => {
         setLocations(snapshot.docs.map((doc) => doc.data()));
+
+
+        firebase
+      .firestore()
+      .collection("Guilds")
+      .where("users", "array-contains", firebase.auth().currentUser.email)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.empty) {
+          console.log("Not in Guild.");
+        } else if (snapshot.docs.length > 1) {
+    console.log("In more than one Guild!");
+  } else {
+          var d = snapshot.docs[0].data();
+          setCurrentguild({
+            name: d.name,
+            creator: d.creator,
+            creation: d.creation,
+            id: d.id,
+            users: d.users,
+          });
+          var templocs = locations;
+          d.marker.forEach((marker) => {
+            templocs.push(marker);
+          })
+          setLocations(templocs);
+        }
+        setFetchedGuild(true);
+      });
+
+        console.log(locations)
         setFetchedLocations(true);
         setFetched(true);
         return;
@@ -99,7 +130,7 @@ export default function LeftBar() {
         return;
       });
   };
-  var getGuild = () => {
+  /*var getGuild = () => {
     if (!loggedIn || fetchedGuild) {
       return;
     }
@@ -112,8 +143,8 @@ export default function LeftBar() {
         if (snapshot.empty) {
           console.log("Not in Guild.");
         } else if (snapshot.docs.length > 1) {
-          console.log("In more than one Guild!");
-        } else {
+    console.log("In more than one Guild!");
+  } else {
           var d = snapshot.docs[0].data();
           setCurrentguild({
             name: d.name,
@@ -122,10 +153,13 @@ export default function LeftBar() {
             id: d.id,
             users: d.users,
           });
+          d.marker.forEach((marker) => {
+            locations.push(marker);
+          })
         }
         setFetchedGuild(true);
       });
-  };
+  };*/
 
   if (fetchedLocations && fetchedItems && fetchedQuests && !fetched) {
     //setFetched(true);
@@ -174,8 +208,6 @@ export default function LeftBar() {
         console.log("Error during logout: " + error);
       });
   };
-
-  getGuild();
 
   return (
     <div id="LeftBar">

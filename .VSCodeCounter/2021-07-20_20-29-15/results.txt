@@ -1,0 +1,74 @@
+Date : 2021-07-20 20:29:15
+Directory : c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src
+Total : 36 files,  2110 codes, 66 comments, 230 blanks, all 2406 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |         26 |      1,555 |         62 |        214 |      1,831 |
+| CSS        |         10 |        555 |          4 |         16 |        575 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                    | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                       |         36 |      2,110 |         66 |        230 |      2,406 |
+| components                                                                                              |         21 |      1,601 |         61 |        120 |      1,782 |
+| components\CreateGuild                                                                                  |          2 |         86 |          0 |          6 |         92 |
+| components\CreateMarker                                                                                 |          2 |        226 |          0 |         16 |        242 |
+| components\Google                                                                                       |          2 |         52 |          4 |          4 |         60 |
+| components\JoinGuild                                                                                    |          2 |         83 |          0 |          6 |         89 |
+| components\LeftBar                                                                                      |          2 |        391 |         36 |         15 |        442 |
+| components\Map                                                                                          |          5 |        524 |         17 |         60 |        601 |
+| components\RightBar                                                                                     |          2 |        148 |          4 |          3 |        155 |
+| components\Start                                                                                        |          2 |         49 |          0 |          5 |         54 |
+| components\currentguild                                                                                 |          2 |         42 |          0 |          5 |         47 |
+| math                                                                                                    |          1 |        271 |          3 |         42 |        316 |
+| pages                                                                                                   |          2 |         80 |          0 |         10 |         90 |
+| services                                                                                                |         11 |        146 |          2 |         55 |        203 |
++---------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                | language   | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\CreateGuild\CreateGuild.css   | CSS        |         33 |          0 |          1 |         34 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\CreateGuild\CreateGuild.js    | JavaScript |         53 |          0 |          5 |         58 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\CreateMarker\CreateMarker.css | CSS        |        150 |          0 |          6 |        156 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\CreateMarker\CreateMarker.js  | JavaScript |         76 |          0 |         10 |         86 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\Google\Google.css             | CSS        |         24 |          0 |          1 |         25 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\Google\Google.js              | JavaScript |         28 |          4 |          3 |         35 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\JoinGuild\JoinGuild.css       | CSS        |         34 |          0 |          1 |         35 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\JoinGuild\JoinGuild.js        | JavaScript |         49 |          0 |          5 |         54 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\LeftBar\LeftBar.css           | CSS        |        149 |          0 |          1 |        150 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\LeftBar\LeftBar.js            | JavaScript |        242 |         36 |         14 |        292 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\Map\Map.css                   | CSS        |         42 |          0 |          0 |         42 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\Map\Map.js                    | JavaScript |        102 |          4 |         16 |        122 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\Map\MapO.js                   | JavaScript |        109 |          7 |         18 |        134 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\Map\MapOO.js                  | JavaScript |        157 |          2 |         13 |        172 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\Map\MapOOO.js                 | JavaScript |        114 |          4 |         13 |        131 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\RightBar\RightBar.css         | CSS        |         53 |          4 |          1 |         58 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\RightBar\RightBar.js          | JavaScript |         95 |          0 |          2 |         97 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\Start\Start.css               | CSS        |         28 |          0 |          1 |         29 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\Start\Start.js                | JavaScript |         21 |          0 |          4 |         25 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\currentguild\currentguild.css | CSS        |         22 |          0 |          1 |         23 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\components\currentguild\currentguild.js  | JavaScript |         20 |          0 |          4 |         24 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\index.js                                 | JavaScript |         12 |          0 |          3 |         15 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\math\colortofilter.js                    | JavaScript |        271 |          3 |         42 |        316 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\pages\App.css                            | CSS        |         20 |          0 |          3 |         23 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\pages\App.js                             | JavaScript |         60 |          0 |          7 |         67 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\services\createguild.js                  | JavaScript |         11 |          0 |          5 |         16 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\services\currentguild.js                 | JavaScript |         17 |          0 |          5 |         22 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\services\fetched.js                      | JavaScript |         11 |          0 |          5 |         16 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\services\firebase.js                     | JavaScript |         16 |          1 |          5 |         22 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\services\items.js                        | JavaScript |         15 |          0 |          5 |         20 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\services\joinguild.js                    | JavaScript |         11 |          0 |          5 |         16 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\services\locations.js                    | JavaScript |         17 |          1 |          5 |         23 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\services\quests.js                       | JavaScript |         15 |          0 |          5 |         20 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\services\rerender.js                     | JavaScript |         11 |          0 |          5 |         16 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\services\selCoords.js                    | JavaScript |         11 |          0 |          5 |         16 |
+| c:\Users\mamum\Documents\dev\deepwoken\mimler123.github.io\src\services\start.js                        | JavaScript |         11 |          0 |          5 |         16 |
+| Total                                                                                                   |            |      2,110 |         66 |        230 |      2,406 |
++---------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

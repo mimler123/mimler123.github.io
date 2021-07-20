@@ -6,6 +6,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import SharedLocations from "../../services/locations";
 import SharedRerender from "../../services/rerender";
 import ColorToFilter from "../../math/colortofilter";
+import SharedSelCoords from "../../services/selCoords";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibWltbGVyMTIzIiwiYSI6ImNrb3FldGJsbDBzcjIyb3N6cGJzdG1zMGUifQ.U2P7kCAnw3o1q4NRkWEDBg";
 
@@ -13,6 +14,7 @@ export default function Map() {
 
     const {locations, setLocations} = SharedLocations();
     const {rerender, setRerender} = SharedRerender();
+    const {selCoords, setSelCoords} = SharedSelCoords();
 
     const mapContainer = useRef(null);
     const map = useRef(null);
@@ -21,6 +23,7 @@ export default function Map() {
     const [zoom, setZoom] = useState(1);
     const [markers, setMarkers] = useState({});
     const [loaded, setLoaded] = useState(false);
+    const [selCoordsState, setSelCoordsState] = useState([]);
 
     const markerClick = (id, lng, lat) => {
         map.current.flyTo({
@@ -79,11 +82,6 @@ export default function Map() {
             console.log("MAP LOADED!");
             setLoaded(true);
         });
-        map.current.on("click", markers[10], (e) => {
-            console.log(e);
-        })
-
-        if(!loaded) return;
 
         locations.forEach((loc) => {
             if(markers[loc.id] !== undefined) {
@@ -91,6 +89,10 @@ export default function Map() {
                 markers[loc.id] = undefined;
             }
         })
+
+        if(locations[0].position === undefined) {
+            return;
+        }
         
         locations.filter((l) => l.visible === true).map((loc) => {
             var popup = new mapboxgl.Popup({ offset: 25 }).setText(loc.description);
@@ -104,6 +106,7 @@ export default function Map() {
                 markerElement.style.filter = ColorToFilter(loc.color[0], loc.color[1], loc.color[2]);
             }
             markers[loc.id] = new mapboxgl.Marker(markerElement).setPopup(popup).setLngLat([loc.position[0], loc.position[1]]).addTo(map.current)
+            
         });
             
     }, [locations, rerender])
