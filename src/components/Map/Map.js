@@ -1,130 +1,118 @@
-import React, { useEffect, useState } from "react";
+ // eslint-disable-next-line import/no-webpack-loader-syntax
+import mapboxgl from "!mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 import "./Map.css";
-import {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-  Circle,
-} from "react-google-maps";
-import { compose, withProps } from "recompose";
+import React, { useRef, useState, useEffect } from 'react'
 import SharedLocations from "../../services/locations";
 import SharedRerender from "../../services/rerender";
+import ColorToFilter from "../../math/colortofilter";
 
-export default function Mapp() {
-  const { locations, setLocations } = SharedLocations();
-  const { rerender, setRerender } = SharedRerender();
-  const [r, setr] = useState(0);
+mapboxgl.accessToken = "pk.eyJ1IjoibWltbGVyMTIzIiwiYSI6ImNrb3FldGJsbDBzcjIyb3N6cGJzdG1zMGUifQ.U2P7kCAnw3o1q4NRkWEDBg";
 
-  var repeatOnXAxis = false;
+export default function Map() {
 
-  useEffect(() => {
-    setr(Math.random());
-    console.log("Locations changed -> rerender will be called");
-  }, rerender);
+    const {locations, setLocations} = SharedLocations();
+    const {rerender, setRerender} = SharedRerender();
 
-  function getNormalizedCoord(coord, zoom) {
-    if (!repeatOnXAxis) return coord;
+    const mapContainer = useRef(null);
+    const map = useRef(null);
+    const [lng, setLng] = useState(0.00);
+    const [lat, setLat] = useState(0.00);
+    const [zoom, setZoom] = useState(1);
+    const [markers, setMarkers] = useState({});
+    const [loaded, setLoaded] = useState(false);
 
-    var y = coord.y;
-    var x = coord.x;
-
-    // tile range in one direction range is dependent on zoom level
-    // 0 = 1 tile, 1 = 2 tiles, 2 = 4 tiles, 3 = 8 tiles, etc
-    var tileRange = 1 << zoom;
-
-    // don't repeat across Y-axis (vertically)
-    if (y < 0 || y >= tileRange) {
-      return null;
+    const markerClick = (id, lng, lat) => {
+        map.current.flyTo({
+            center: [lng, lat]
+        })
     }
 
-    // repeat across X-axis
-    if (x < 0 || x >= tileRange) {
-      x = ((x % tileRange) + tileRange) % tileRange;
-    }
+    useEffect(() => {
+        if(map.current) return;
+        map.current = new mapboxgl.Map({
+            container: mapContainer.current,
+            //style: "mapbox://styles/mapbox/streets-v11",
+            style: {
+                version: 8,
+                sources: {
+                    "deepwokenmap": {
+                        type: "raster",
+                        tiles: [
+                            "https://mimler123.github.io/tiles/{z}_{x}_{y}.jpg"
+                        ],
+                        tileSize: 256,
+                        attribution: "DEEPWOKEN NON-OFFICIAL MAP",
+                        //bounds: [-100,-100,100,150]
+                    }
+                },
+                layers: [
+                    {
+                        id: 'deepwokenmap',
+                        source: 'deepwokenmap',
+                        type: 'raster',
+                        minzoom: 0,
+                        maxzoom: 3
+                    }
+                ]
+            },
+            center: [lng, lat],
+            zoom: zoom,
+            maxZoom: 2.49,
+            continuousWorld: false,
+            noWrap: true,
+            renderWorldCopies: false
+        })
+        
+        
+    })
 
-    return {
-      x: x,
-      y: y,
-    };
-  }
+    useEffect(() => {
+        if(!map.current) return;
 
-  const google = window.google;
-  const customMapType = new google.maps.ImageMapType({
-    getTileUrl: function (coord, zoom) {
-      var normalizedCoord = getNormalizedCoord(coord, zoom);
-      if (
-        normalizedCoord &&
-        normalizedCoord.x < Math.pow(2, zoom) &&
-        normalizedCoord.x > -1 &&
-        normalizedCoord.y < Math.pow(2, zoom) &&
-        normalizedCoord.y > -1
-      ) {
-        return (
-          "//mimler123.github.io/tiles/" +
-          zoom +
-          "_" +
-          normalizedCoord.x +
-          "_" +
-          normalizedCoord.y +
-          ".jpg"
-        );
-      } else {
-        return "./tiles/empty.jpg";
-      }
-    },
-    tileSize: new google.maps.Size(256, 256),
-    maxZoom: 3,
-    minZoom: 0,
-    name: "PS_Bramus.GoogleMapsTileCutter",
-  });
+        map.current.on("move", () => {
+            setLng(map.current.getCenter().lng.toFixed(4));
+            setLat(map.current.getCenter().lat.toFixed(4));
+            setZoom(map.current.getZoom().toFixed(2))
+        });
+        map.current.on("load", () => {
+            console.log("MAP LOADED!");
+            setLoaded(true);
+        });
+        map.current.on("click", markers[10], (e) => {
+            console.log(e);
+        })
 
-  let iconone = new google.maps.MarkerImage(
-    "https://mimler123.github.io/static/media/icon1.png",
-    null /* size is determined at runtime */,
-    null /* origin is 0,0 */,
-    null /* anchor is bottom center of the scaled image */,
-    new google.maps.Size(32, 32)
-  );
-  const MapComponent = compose(
-    withProps({
-      googleMapURL:
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyB_kyttiO8LQnnhNv_7c_P1Q47op3cGQ3E&v=3.exp&libraries=geometry,drawing,places",
-      loadingElement: <div style={{ height: `100%` }} />,
-      containerElement: <div style={{ height: `100vh` }} />,
-      mapElement: <div style={{ height: `100%` }} />,
-    }),
-    withScriptjs,
-    withGoogleMap
-  )((props) => (
-    <GoogleMap
-      onClick={(e) => console.log(e.latLng.lat() + " // " + e.latLng.lng())}
-      defaultZoom={2}
-      defaultCenter={{ lat: 0, lng: 0 }}
-      defaultMapTypeId="custom"
-      defaultOptions={{
-        maxZoom: 6,
-        mapTypeControlOptions: {
-          mapTypeIds: ["custom"],
-        },
-      }}
-      mapTypeId="custom"
-      defaultExtraMapTypes={[["custom", customMapType]]}
-    >
-      {locations
-        .filter((l) => l.visible === true)
-        .map((loc) => (
-          <Marker
-            position={{ lat: loc.position[0], lng: loc.position[1] }}
-            icon={iconone}
-          />
-        ))}
-    </GoogleMap>
-  ));
+        if(!loaded) return;
 
-  return (
-    <div className="map" id="map">
-      <MapComponent />
-    </div>
-  );
+        locations.forEach((loc) => {
+            if(markers[loc.id] !== undefined) {
+                markers[loc.id].remove();
+                markers[loc.id] = undefined;
+            }
+        })
+        
+        locations.filter((l) => l.visible === true).map((loc) => {
+            var popup = new mapboxgl.Popup({ offset: 25 }).setText(loc.description);
+            var markerElement = document.createElement('div');
+            markerElement.className = 'marker';
+            markerElement.style.backgroundImage = `url('https://mimler123.github.io/static/media/icon${loc.icon}.png')`;
+            markerElement.onclick = () => {markerClick(loc.id, loc.position[0], loc.position[1])};
+            if(loc.color[0] === 0 && loc.color[1] === 0 && loc.color[2] === 0) {
+                //
+            }else {
+                markerElement.style.filter = ColorToFilter(loc.color[0], loc.color[1], loc.color[2]);
+            }
+            markers[loc.id] = new mapboxgl.Marker(markerElement).setPopup(popup).setLngLat([loc.position[0], loc.position[1]]).addTo(map.current)
+        });
+            
+    }, [locations, rerender])
+    return (
+        <div>
+            <div className="mapDebug">
+                DEBUG: lng: {lng} lat: {lat} zoom: {zoom}
+            </div>
+            <div ref={mapContainer} className="map"></div>
+        </div>
+    )
 }
